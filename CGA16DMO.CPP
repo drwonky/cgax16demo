@@ -12,6 +12,7 @@
 #include <conio.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "xpm.h"
 
 #define CRTCa 0x3d8	/* 6845 mode control register */
 #define CRTCb 0x3d4 /* 6845 index register */
@@ -121,7 +122,7 @@ int main(void)
 		/* Set the video memory to ▐ */
 		buffer[i]=0xde;
 		/* assign random color attribute to each cell */
-		buffer[i+1]=(unsigned char)rand()%255;
+		buffer[i+1]=(unsigned char)1+(rand()%254);
 	}
 
 	while(!kbhit()) {
@@ -137,6 +138,7 @@ int main(void)
 			*/
 			lfsr=buffer[i];
 
+			if (lfsr == xpm[i/2]) continue;
 			bit = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5)) /* & 1 */;
 			lfsr = (lfsr >> 1) | (bit << 7);
 
