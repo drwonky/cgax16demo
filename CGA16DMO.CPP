@@ -132,14 +132,14 @@ int main(void)
 				the downside of this implementation is that black cells remain black and
 				the pattern repeats shortly.
 			
-				taps: 16 14 13 11; feedback polynomial: x^16 + x^14 + x^13 + x^11 + 1
+				taps: 8 6 5 4; feedback polynomial: x^8 + x^6 + x^5 + x^4 + 1
 
 				it's faster to read the far pointer, manipulate it locally, then write
 			*/
 			lfsr=buffer[i];
 
 			if (lfsr == xpm[i/2]) continue;
-			bit = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5)) /* & 1 */;
+			bit = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 4)) /* & 1 */;
 			lfsr = (lfsr >> 1) | (bit << 7);
 
 			buffer[i]=lfsr;
